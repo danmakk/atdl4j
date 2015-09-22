@@ -23,6 +23,7 @@ public class SwingDropDownListWidget
 	private JLabel label;
 	private JPanel wrapper;
 
+        @Override
 	public void setVisible(boolean visible){
 		if (wrapper != null)
 			wrapper.setVisible(visible);
@@ -32,12 +33,14 @@ public class SwingDropDownListWidget
 	
 	
 	// Helper to get list items
+        @Override
 	protected List<ListItemT> getListItems()
 	{
 		return (control instanceof EditableDropDownListT) ? 
 				((EditableDropDownListT)control).getListItem() : ((DropDownListT)control).getListItem();
 	}	
 
+        @Override
 	public String getControlValueRaw()
 	{
 		int selection = dropDownList.getSelectedIndex();

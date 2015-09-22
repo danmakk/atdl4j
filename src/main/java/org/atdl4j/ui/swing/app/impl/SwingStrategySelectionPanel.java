@@ -1,6 +1,5 @@
 package org.atdl4j.ui.swing.app.impl;
 
-
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.awt.event.ItemEvent;
@@ -18,161 +17,137 @@ import org.atdl4j.data.Atdl4jHelper;
 import org.atdl4j.fixatdl.core.StrategyT;
 import org.atdl4j.ui.app.impl.AbstractStrategySelectionPanel;
 
-
 /**
  * Represents the Swing-specific available strategy choices GUI component.
- * 
+ *
  * @author Scott Atwell
  * @version 1.0, October 5, 2010
  */
-public class SwingStrategySelectionPanel 
-	extends AbstractStrategySelectionPanel
-{
-	private final Logger logger = Logger.getLogger(SwingStrategySelectionPanel.class);
-	
-	private JComboBox strategiesDropDown;
-	public Object buildStrategySelectionPanel(Object parentOrShell, Atdl4jOptions atdl4jOptions)
-	{
-		return buildStrategySelectionPanel( (Window) parentOrShell, atdl4jOptions );
-	}
-	
-	public JPanel buildStrategySelectionPanel(Window aParentContainer, Atdl4jOptions atdl4jOptions)
-	{
-		setAtdl4jOptions( atdl4jOptions );
-		
-		JPanel panel = new JPanel(new BorderLayout());
-		// label
-		JLabel strategiesDropDownLabel = new JLabel("Strategy");
-		panel.add( strategiesDropDownLabel, BorderLayout.WEST );
+public class SwingStrategySelectionPanel
+        extends AbstractStrategySelectionPanel {
 
-		// dropDownList
-		strategiesDropDown = new JComboBox();
-		strategiesDropDown.setEditable( false );
-		
-		panel.add(strategiesDropDown, BorderLayout.CENTER);
+    private final Logger logger = Logger.getLogger(SwingStrategySelectionPanel.class);
 
-		if ( Atdl4jConfig.getConfig().getStrategyDropDownItemDepth() != null )
-		{
-			strategiesDropDown.setMaximumRowCount( Atdl4jConfig.getConfig().getStrategyDropDownItemDepth().intValue() );
-		}
-		// tooltip
-		strategiesDropDown.setToolTipText("Select a Strategy");
-		// action listener
-		strategiesDropDown.addItemListener( new ItemListener()	{
+    private JComboBox strategiesDropDown;
 
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-				    firePreStrategySelectedEvent();
-					int index = strategiesDropDown.getSelectedIndex();
-					selectDropDownStrategy( index );
-				}
-			}
-		} );
-	
-		return panel;
-	}
+    public Object buildStrategySelectionPanel(Object parentOrShell, Atdl4jOptions atdl4jOptions) {
+        return buildStrategySelectionPanel((Window) parentOrShell, atdl4jOptions);
+    }
 
+    public JPanel buildStrategySelectionPanel(Window aParentContainer, Atdl4jOptions atdl4jOptions) {
+        setAtdl4jOptions(atdl4jOptions);
 
+        JPanel panel = new JPanel(new BorderLayout());
+        // label
+        JLabel strategiesDropDownLabel = new JLabel("Strategy");
+        panel.add(strategiesDropDownLabel, BorderLayout.WEST);
 
-  public void loadStrategyList( List<StrategyT> aStrategyList )
-	{
-		strategiesDropDown.removeAllItems();
+        // dropDownList
+        strategiesDropDown = new JComboBox();
+        strategiesDropDown.setEditable(false);
 
-		setStrategiesList( aStrategyList );
+        panel.add(strategiesDropDown, BorderLayout.CENTER);
 
-		if ( getStrategiesList() == null )
-		{
-			return;
-		}
+        if (Atdl4jConfig.getConfig().getStrategyDropDownItemDepth() != null) {
+            strategiesDropDown.setMaximumRowCount(Atdl4jConfig.getConfig().getStrategyDropDownItemDepth().intValue());
+        }
+        // tooltip
+        strategiesDropDown.setToolTipText("Select a Strategy");
+        // action listener
+        strategiesDropDown.addItemListener(new ItemListener() {
 
-		for (StrategyT tempStrategy : getStrategiesList()) 
-		{
-			logger.debug( "loadStrategyList() [" + strategiesDropDown.getItemCount() + "] strategiesDropDown.add: " + Atdl4jHelper.getStrategyUiRepOrName( tempStrategy ) );
-			strategiesDropDown.addItem( Atdl4jHelper.getStrategyUiRepOrName( tempStrategy ) );
-		}
-	}
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    firePreStrategySelectedEvent();
+                    int index = strategiesDropDown.getSelectedIndex();
+                    selectDropDownStrategy(index);
+                }
+            }
+        });
 
+        return panel;
+    }
 
-	public void selectDropDownStrategy(int index)
-	{
-		logger.debug( "selectDropDownStrategy() index: " + index );
-		
-		if ( getStrategiesList().size() != strategiesDropDown.getItemCount() )
-		{
-			return;
-		}
-		
-		strategiesDropDown.setSelectedIndex( index );
-		
-		StrategyT tempStrategy = getStrategiesList().get( index );
-		
-		if ( ! strategiesDropDown.getItemAt( index ).equals( Atdl4jHelper.getStrategyUiRepOrName( tempStrategy ) ) )
-		{
-			throw new IllegalStateException( "UNEXPECTED ERROR: strategiesDropDown.getItem(" + index + "): " + strategiesDropDown.getItemAt( index ) + " DID NOT MATCH tempStrategy: " + Atdl4jHelper.getStrategyUiRepOrName( tempStrategy ) );
-		}
-		
-		fireStrategySelectedEvent( tempStrategy );
-	}
+    public void loadStrategyList(List<StrategyT> aStrategyList) {
+        strategiesDropDown.removeAllItems();
 
-	
+        setStrategiesList(aStrategyList);
+
+        if (getStrategiesList() == null) {
+            return;
+        }
+
+        for (StrategyT tempStrategy : getStrategiesList()) {
+            logger.debug("loadStrategyList() [" + strategiesDropDown.getItemCount() + "] strategiesDropDown.add: " + Atdl4jHelper.getStrategyUiRepOrName(tempStrategy));
+            strategiesDropDown.addItem(Atdl4jHelper.getStrategyUiRepOrName(tempStrategy));
+        }
+    }
+
+    public void selectDropDownStrategy(int index) {
+        logger.debug("selectDropDownStrategy() index: " + index);
+
+        if (getStrategiesList().size() != strategiesDropDown.getItemCount()) {
+            return;
+        }
+
+        strategiesDropDown.setSelectedIndex(index);
+
+        StrategyT tempStrategy = getStrategiesList().get(index);
+
+        if (!strategiesDropDown.getItemAt(index).equals(Atdl4jHelper.getStrategyUiRepOrName(tempStrategy))) {
+            throw new IllegalStateException("UNEXPECTED ERROR: strategiesDropDown.getItem(" + index + "): " + strategiesDropDown.getItemAt(index) + " DID NOT MATCH tempStrategy: " + Atdl4jHelper.getStrategyUiRepOrName(tempStrategy));
+        }
+
+        fireStrategySelectedEvent(tempStrategy);
+    }
+
 // 4/16/2010 Scott Atwell	public void selectDropDownStrategy(String strategyName) 
-	public void selectDropDownStrategyByStrategyName(String aStrategyName) 
-	{
-		logger.debug( "selectDropDownStrategyByStrategyName() aStrategyName: " + aStrategyName );
-		
-		if ( getStrategiesList().size() != strategiesDropDown.getItemCount() )
-		{
-			throw new IllegalStateException( "UNEXPECTED ERROR: getStrategiesList().size(): " + getStrategiesList().size() + " does NOT MATCH strategiesDropDown.getItemCount(): " + strategiesDropDown.getItemCount() );
-		}
-			
-		for (int i = 0; i < getStrategiesList().size(); i++) 
-		{
-			StrategyT tempStrategy = getStrategiesList().get( i );
-			
-			if ( aStrategyName.equals( tempStrategy.getName() ) )
-			{
-				logger.debug( "selectDropDownStrategyByStrategyName() invoking selectDropDownStrategy( " + i + " )" );
-				selectDropDownStrategy( i );
-			}
-		}
-	}
+    public void selectDropDownStrategyByStrategyName(String aStrategyName) {
+        logger.debug("selectDropDownStrategyByStrategyName() aStrategyName: " + aStrategyName);
+
+        if (getStrategiesList().size() != strategiesDropDown.getItemCount()) {
+            throw new IllegalStateException("UNEXPECTED ERROR: getStrategiesList().size(): " + getStrategiesList().size() + " does NOT MATCH strategiesDropDown.getItemCount(): " + strategiesDropDown.getItemCount());
+        }
+
+        for (int i = 0; i < getStrategiesList().size(); i++) {
+            StrategyT tempStrategy = getStrategiesList().get(i);
+
+            if (aStrategyName.equals(tempStrategy.getName())) {
+                logger.debug("selectDropDownStrategyByStrategyName() invoking selectDropDownStrategy( " + i + " )");
+                selectDropDownStrategy(i);
+            }
+        }
+    }
 
 // 4/16/2010 Scott Atwell added	
-	public void selectDropDownStrategyByStrategyWireValue( String aStrategyWireValue ) 
-	{
-		logger.debug( "selectDropDownStrategyByStrategyWireValue() aStrategyWireValue: " + aStrategyWireValue );
-		
-		if ( getStrategiesList().size() != strategiesDropDown.getItemCount() )
-		{
-			throw new IllegalStateException( "UNEXPECTED ERROR: getStrategiesList().size(): " + getStrategiesList().size() + " does NOT MATCH strategiesDropDown.getItemCount(): " + strategiesDropDown.getItemCount() );
-		}
-			
-		for (int i = 0; i < getStrategiesList().size(); i++) 
-		{
-			StrategyT tempStrategy = getStrategiesList().get( i );
-			
-			if ( aStrategyWireValue.equals( tempStrategy.getWireValue() ) )
-			{
-				logger.debug( "selectDropDownStrategyByStrategyWireValue() invoking selectDropDownStrategy( " + i + " )" );
-				selectDropDownStrategy( i );
-			}
-		}
-	}
-	
-	public void selectFirstDropDownStrategy()
-	{
-		if ( ( strategiesDropDown != null ) && 
-			  ( strategiesDropDown.getItemCount() > 0 ) )
-		{
-			strategiesDropDown.setSelectedItem( null );
-			logger.debug( "selectFirstDropDownStrategy() invoking selectDropDownStrategy( 0 )" );
-			selectDropDownStrategy( 0 );
-		}
-	}
-	
-	public void setEnabled(boolean enable)
-	{
-	    strategiesDropDown.setEnabled(enable);
-	}
+    public void selectDropDownStrategyByStrategyWireValue(String aStrategyWireValue) {
+        logger.debug("selectDropDownStrategyByStrategyWireValue() aStrategyWireValue: " + aStrategyWireValue);
+
+        if (getStrategiesList().size() != strategiesDropDown.getItemCount()) {
+            throw new IllegalStateException("UNEXPECTED ERROR: getStrategiesList().size(): " + getStrategiesList().size() + " does NOT MATCH strategiesDropDown.getItemCount(): " + strategiesDropDown.getItemCount());
+        }
+
+        for (int i = 0; i < getStrategiesList().size(); i++) {
+            StrategyT tempStrategy = getStrategiesList().get(i);
+
+            if (aStrategyWireValue.equals(tempStrategy.getWireValue())) {
+                logger.debug("selectDropDownStrategyByStrategyWireValue() invoking selectDropDownStrategy( " + i + " )");
+                selectDropDownStrategy(i);
+            }
+        }
+    }
+
+    public void selectFirstDropDownStrategy() {
+        if ((strategiesDropDown != null)
+                && (strategiesDropDown.getItemCount() > 0)) {
+            strategiesDropDown.setSelectedItem(null);
+            logger.debug("selectFirstDropDownStrategy() invoking selectDropDownStrategy( 0 )");
+            selectDropDownStrategy(0);
+        }
+    }
+
+    public void setEnabled(boolean enable) {
+        strategiesDropDown.setEnabled(enable);
+    }
 }

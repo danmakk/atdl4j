@@ -71,7 +71,7 @@ public class SWTAtdl4jTesterApp
 
 		// -- Delegate setup to AbstractAtdl4jTesterApp, construct a new
 		// SWT-specific Atdl4jOptions --
-		init( args, config, new Atdl4jOptions(), shell );
+		init(config, new Atdl4jOptions(), shell );
 
 		// -- Build the SWT.Composite from Atdl4jTesterPanel (** core GUI component **) --
 		getAtdl4jTesterPanel().buildAtdl4jTesterPanel( shell, getAtdl4jOptions() );

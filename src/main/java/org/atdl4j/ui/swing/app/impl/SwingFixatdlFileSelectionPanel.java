@@ -99,8 +99,8 @@ public class SwingFixatdlFileSelectionPanel
 				});
 				
 				int returnVal = fc.showOpenDialog(parentComposite);
-				if (returnVal == JFileChooser.APPROVE_OPTION){
-					File f = fc.getSelectedFile();
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+                                    File f = fc.getSelectedFile();
 					filepathText.setText(f.getPath());
 					fireFixatdlFileSelectedEvent( f.getPath() );
 				}

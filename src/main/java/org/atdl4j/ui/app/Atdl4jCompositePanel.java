@@ -13,129 +13,129 @@ import org.atdl4j.ui.impl.SelectedStrategyDetails;
 
 /**
  * Represents the core strategy selection and display GUI component.
- * 
- * 
- * 	[as of March 4, 2010 @author Scott Atwell] "SWTApplication" refactoring - rename, overhaul, and layered
- * 
- *		Interfaces:
- * 	-----------
- *		- org.atdl4j.ui.app.Atdl4jTesterPanel
- *		  - org.atdl4j.ui.app.Atdl4jInputAndFilterDataSelectionPanel
- *		    - org.atdl4j.ui.app.Atdl4jInputAndFilterDataPanel
- *		      - org.atdl4j.ui.app.FixMsgLoadPanel
- *		  - org.atdl4j.ui.app.Atdl4jCompositePanel
- *		    - org.atdl4j.ui.app.FixatdlFileSelectionPanel
- *		    - org.atdl4j.ui.app.StrategySelectionPanel
- *		    - org.atdl4j.ui.app.StrategyDescriptionPanel
- *		    - org.atdl4j.ui.app.StrategiesPanel
- *		
- *		Non-UI-specific abstract base implementation:
- *		---------------------------------------------
- *		org.atdl4j.ui.app.AbstractAtdl4jTesterApp
- *		- org.atdl4j.ui.app.AbstractAtdl4jTesterPanel
- *		  - org.atdl4j.ui.app.AbstractAtdl4jInputAndFilterDataSelectionPanel
- *		    - org.atdl4j.ui.app.AbstractAtdl4jInputAndFilterDataPanel
- *		      - org.atdl4j.ui.app.AbstractFixMsgLoadPanel
- *		  - org.atdl4j.ui.app.AbstractAtdl4jCompositePanel
- *		    - org.atdl4j.ui.app.AbstractFixatdlFileSelectionPanel
- *		    - org.atdl4j.ui.app.AbstractStrategySelectionPanel
- *		    - org.atdl4j.ui.app.AbstractStrategyDescriptionPanel
- *		    - org.atdl4j.ui.app.AbstractStrategiesUI
- *		
- *		SWT-specific implementation:
- *		----------------------------  
- *		org.atdl4j.ui.swt.app.SWTAtdl4jTesterApp
- *		- org.atdl4j.ui.swt.app.SWTAtdl4jTesterPanel
- *		  - org.atdl4j.ui.swt.app.SWTAtdl4jInputAndFilterDataSelectionPanel
- *		    - org.atdl4j.ui.swt.app.SWTAtdl4jInputAndFilterDataPanel
- *		      - org.atdl4j.ui.swt.app.SWTFixMsgLoadPanel
- *		  - org.atdl4j.ui.swt.app.SWTAtdl4jCompositePanel
- *		    - org.atdl4j.ui.swt.app.SWTFixatdlFileSelectionPanel
- *		    - org.atdl4j.ui.swt.app.SWTStrategySelectionPanel
- *		    - org.atdl4j.ui.swt.app.SWTStrategyDescriptionPanel
- *		    - org.atdl4j.ui.swt.app.SWTStrategiesPanel
- *		
- *		Listeners:
- *		----------
- *		- org.atdl4j.ui.app.Atdl4jInputAndFilterDataPanelListener
- *		- org.atdl4j.ui.app.FixMsgLoadPanelListener
- *		- org.atdl4j.ui.app.FixatdlFileSelectionPanelListener
- *		- org.atdl4j.ui.app.StrategySelectionPanelListener
- *		- org.atdl4j.ui.app.StrategiesUIListener
- *		
- *		Pop-up message handler:
- *		-----------------------
- *		- org.atdl4j.ui.app.Atdl4jUserMessageHandler
- *		- org.atdl4j.ui.app.AbstractAtdl4jUserMessageHandler
- *		- org.atdl4j.ui.swt.app.SWTAtdl4jUserMessageHandler
- *		
- *		Config:
- *		-------
- *		- org.atdl4j.config.Atdl4jOptions
- *		- org.atdl4j.config.AbstractAtdl4jOptions
- *		- org.atdl4j.ui.swt.config.SWTAtdl4jOptions
- *		- org.atdl4j.config.InputAndFilterData 
+ *
+ *
+ * [as of March 4, 2010 @author Scott Atwell] "SWTApplication" refactoring -
+ * rename, overhaul, and layered
+ *
+ * Interfaces: ----------- - org.atdl4j.ui.app.Atdl4jTesterPanel -
+ * org.atdl4j.ui.app.Atdl4jInputAndFilterDataSelectionPanel -
+ * org.atdl4j.ui.app.Atdl4jInputAndFilterDataPanel -
+ * org.atdl4j.ui.app.FixMsgLoadPanel - org.atdl4j.ui.app.Atdl4jCompositePanel -
+ * org.atdl4j.ui.app.FixatdlFileSelectionPanel -
+ * org.atdl4j.ui.app.StrategySelectionPanel -
+ * org.atdl4j.ui.app.StrategyDescriptionPanel -
+ * org.atdl4j.ui.app.StrategiesPanel
+ *
+ * Non-UI-specific abstract base implementation:
+ * ---------------------------------------------
+ * org.atdl4j.ui.app.AbstractAtdl4jTesterApp -
+ * org.atdl4j.ui.app.AbstractAtdl4jTesterPanel -
+ * org.atdl4j.ui.app.AbstractAtdl4jInputAndFilterDataSelectionPanel -
+ * org.atdl4j.ui.app.AbstractAtdl4jInputAndFilterDataPanel -
+ * org.atdl4j.ui.app.AbstractFixMsgLoadPanel -
+ * org.atdl4j.ui.app.AbstractAtdl4jCompositePanel -
+ * org.atdl4j.ui.app.AbstractFixatdlFileSelectionPanel -
+ * org.atdl4j.ui.app.AbstractStrategySelectionPanel -
+ * org.atdl4j.ui.app.AbstractStrategyDescriptionPanel -
+ * org.atdl4j.ui.app.AbstractStrategiesUI
+ *
+ * SWT-specific implementation: ----------------------------
+ * org.atdl4j.ui.swt.app.SWTAtdl4jTesterApp -
+ * org.atdl4j.ui.swt.app.SWTAtdl4jTesterPanel -
+ * org.atdl4j.ui.swt.app.SWTAtdl4jInputAndFilterDataSelectionPanel -
+ * org.atdl4j.ui.swt.app.SWTAtdl4jInputAndFilterDataPanel -
+ * org.atdl4j.ui.swt.app.SWTFixMsgLoadPanel -
+ * org.atdl4j.ui.swt.app.SWTAtdl4jCompositePanel -
+ * org.atdl4j.ui.swt.app.SWTFixatdlFileSelectionPanel -
+ * org.atdl4j.ui.swt.app.SWTStrategySelectionPanel -
+ * org.atdl4j.ui.swt.app.SWTStrategyDescriptionPanel -
+ * org.atdl4j.ui.swt.app.SWTStrategiesPanel
+ *
+ * Listeners: ---------- -
+ * org.atdl4j.ui.app.Atdl4jInputAndFilterDataPanelListener -
+ * org.atdl4j.ui.app.FixMsgLoadPanelListener -
+ * org.atdl4j.ui.app.FixatdlFileSelectionPanelListener -
+ * org.atdl4j.ui.app.StrategySelectionPanelListener -
+ * org.atdl4j.ui.app.StrategiesUIListener
+ *
+ * Pop-up message handler: ----------------------- -
+ * org.atdl4j.ui.app.Atdl4jUserMessageHandler -
+ * org.atdl4j.ui.app.AbstractAtdl4jUserMessageHandler -
+ * org.atdl4j.ui.swt.app.SWTAtdl4jUserMessageHandler
+ *
+ * Config: ------- - org.atdl4j.config.Atdl4jOptions -
+ * org.atdl4j.config.AbstractAtdl4jOptions -
+ * org.atdl4j.ui.swt.config.SWTAtdl4jOptions -
+ * org.atdl4j.config.InputAndFilterData
  *
  *
  * @author Scott Atwell
  * @version 1.0, Feb 28, 2010
  */
-public interface Atdl4jCompositePanel
-{
-	public Object buildAtdl4jCompositePanel(Object aParentOrShell, Atdl4jOptions aAtdl4jOptions);
+public interface Atdl4jCompositePanel {
 
-	public Atdl4jOptions getAtdl4jOptions();
-	
-	/* 
-	 * Parses the FIXatdl file aFilename into StrategiesT storing the result via Atdl4jOptions().setStrategies().
-	 */
-	public void parseFixatdlFile( String aFilename ) 
-		throws FIXatdlFormatException; 
+    public Object buildAtdl4jCompositePanel(Object aParentOrShell, Atdl4jOptions aAtdl4jOptions);
 
-	/**
-	 * Can be invoked/re-invoked at anytime provided that parseFixatdlFile() has successfully parsed the
-	 * FIXatdl file contents into Atdl4jOptions().setStrategies().  Re-generates the display.
-	 * @throws Atdl4jClassLoadException 
-	 * @throws FIXatdlFormatException 
-	 */
-	public void loadScreenWithFilteredStrategies() throws FIXatdlFormatException;
-	
-	public boolean loadFixMessage( String aFixMessage );
+    public Atdl4jOptions getAtdl4jOptions();
 
-	public boolean loadScreenWithFilteredStrategiesAndLoadFixMessage( String aFixMessage );
-	public boolean loadScreenWithFilteredStrategiesAndLoadFixMessage( String aFixMessage, String aInputSelectStrategyName ) throws FIXatdlFormatException;
+    /* 
+     * Parses the FIXatdl file aFilename into StrategiesT storing the result via Atdl4jOptions().setStrategies().
+     */
+    public void parseFixatdlFile(String aFilename)
+            throws FIXatdlFormatException;
 
-	/* 
-	 * @return StrategyT (non-null only if passes all validation)
-	 */
-	public StrategyT validateStrategy() throws ValidationException;
+    /**
+     * Can be invoked/re-invoked at anytime provided that parseFixatdlFile() has
+     * successfully parsed the FIXatdl file contents into
+     * Atdl4jOptions().setStrategies(). Re-generates the display.
+     *
+     * @throws Atdl4jClassLoadException
+     * @throws FIXatdlFormatException
+     */
+    public void loadScreenWithFilteredStrategies() throws FIXatdlFormatException;
 
-	public void setVisibleOkCancelButtonSection( boolean aVisible );
-	
-	public void addListener(Atdl4jCompositePanelListener aAtdl4jCompositePanelListener);
-	
-	public void removeListener(Atdl4jCompositePanelListener aAtdl4jCompositePanelListener);
-	
-	public StrategiesT getStrategies();
-	public void setStrategies(StrategiesT strategies);
-	
-	public List<StrategyT> getStrategiesFilteredStrategyList();
-	
-	public StrategyT getSelectedStrategy();
-	public void setSelectedStrategy(StrategyT selectedStrategy);
-	public boolean isSelectedStrategyValidated();
-	public void setSelectedStrategyValidated(boolean aSelectedStrategyValidated);
+    public boolean loadFixMessage(String aFixMessage);
 
-	public StrategiesUI getStrategiesUI();
+    public boolean loadScreenWithFilteredStrategiesAndLoadFixMessage(String aFixMessage);
 
-	public Atdl4jUserMessageHandler getAtdl4jUserMessageHandler();
+    public boolean loadScreenWithFilteredStrategiesAndLoadFixMessage(String aFixMessage, String aInputSelectStrategyName) throws FIXatdlFormatException;
 
-	public void initAtdl4jUserMessageHandler( Object parentOrShell );
-	
-	public void setStrategyEventListener(StrategyEventListener aStrategyEventListener);
-	
-	public SelectedStrategyDetails getSelectedStrategyDetails( boolean aPerformValidationFlag ) 
-	   throws ValidationException;
+    /* 
+     * @return StrategyT (non-null only if passes all validation)
+     */
+    public StrategyT validateStrategy() throws ValidationException;
+
+    public void setVisibleOkCancelButtonSection(boolean aVisible);
+
+    public void addListener(Atdl4jCompositePanelListener aAtdl4jCompositePanelListener);
+
+    public void removeListener(Atdl4jCompositePanelListener aAtdl4jCompositePanelListener);
+
+    public StrategiesT getStrategies();
+
+    public void setStrategies(StrategiesT strategies);
+
+    public List<StrategyT> getStrategiesFilteredStrategyList();
+
+    public StrategyT getSelectedStrategy();
+
+    public void setSelectedStrategy(StrategyT selectedStrategy);
+
+    public boolean isSelectedStrategyValidated();
+
+    public void setSelectedStrategyValidated(boolean aSelectedStrategyValidated);
+
+    public StrategiesUI getStrategiesUI();
+
+    public Atdl4jUserMessageHandler getAtdl4jUserMessageHandler();
+
+    public void initAtdl4jUserMessageHandler(Object parentOrShell);
+
+    public void setStrategyEventListener(StrategyEventListener aStrategyEventListener);
+
+    public SelectedStrategyDetails getSelectedStrategyDetails(boolean aPerformValidationFlag)
+            throws ValidationException;
 
     public void setEditable(boolean editable);
 }
