@@ -244,8 +244,11 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (newValue != null) {
                     if (!newValue.matches("\\d+\\.\\d+")) {
-                        spinner.getEditor().setText(newValue.replaceAll("[^\\d+\\.\\d+]", ""));
+                        String update = newValue.replaceAll("[^\\d+\\.\\d+]", "");
+                        spinner.getEditor().setText(update);
+                        newValue = update;
                     }
+                    spinner.getValueFactory().setValue(Double.parseDouble(newValue));
                 }
             }
         });
