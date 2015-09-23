@@ -3,7 +3,6 @@ package org.atdl4j.ui.javafx;
 import java.util.List;
 
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import org.atdl4j.ui.Atdl4jWidget;
 

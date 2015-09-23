@@ -14,12 +14,15 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -35,7 +38,7 @@ import org.atdl4j.ui.javafx.JavaFXListener;
  * @author daniel.makgonta
  */
 public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
-    
+
     private static final BigDecimal DEFAULT_INNER_INCREMENT = new BigDecimal(1);
     private static final BigDecimal DEFAULT_OUTER_INCREMENT = new BigDecimal(1);
     private static final long serialVersionUID = 2947835451995064559L;
@@ -46,58 +49,58 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
     private int digits = 0;
     private VBox wrapper;
     private SpinnerValueFactory.DoubleSpinnerValueFactory model = new SpinnerValueFactory.DoubleSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE);
-    
+
     @Override
     protected void processReinit(Object aControlInitValue) {
         if (spinner != null) {
             applyInitialValue();
         }
     }
-    
+
     public class DoubleSpinnerListener implements EventHandler<ActionEvent>, ChangeListener<Double> {
-        
+
         private Spinner spinner;
         private BigDecimal increment1;
         private BigDecimal increment2;
         private BigDecimal oldVal;
-        
+
         public DoubleSpinnerListener(Spinner spinner, BigDecimal increment1, BigDecimal increment2) {
             this.spinner = spinner;
             this.increment1 = increment1;
             this.increment2 = increment2;
         }
-        
+
         @Override
         public void handle(ActionEvent event) {
             BigDecimal value = (BigDecimal.valueOf((Double) spinner.getValue()));
-            
+
             if (value == null) {
                 value = BigDecimal.ZERO;
             }
-            
+
             if (oldVal == null) {
                 oldVal = BigDecimal.ZERO;
             }
-            
+
             if (value.compareTo(oldVal) > 0) {
                 value.add(increment1);
             } else if (value.compareTo(oldVal) < 0) {
                 value.add(increment2);
             }
-            
+
             oldVal = value;
         }
-        
+
         @Override
         public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
             if (newValue == null) {
                 newValue = BigDecimal.ZERO.doubleValue();
             }
-            
+
             if (oldValue == null) {
                 oldValue = BigDecimal.ZERO.doubleValue();
             }
-            
+
             if (newValue.compareTo(oldValue) > 0) {
                 newValue += increment1.doubleValue();
             } else {
@@ -118,12 +121,12 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             setValue(null);
         }
     }
-    
+
     @Override
     protected void processNullValueIndicatorChange(Boolean aOldNullValueInd, Boolean aNewNullValueInd) {
         //do nothing
     }
-    
+
     @Override
     public BigDecimal getControlValueRaw() {
         BigDecimal val = BigDecimal.valueOf(Double.parseDouble(spinner.getValue().toString()));
@@ -132,14 +135,14 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
         }
         return val;
     }
-    
+
     @Override
     public void setValue(BigDecimal value) {
         if (value != null) {
             spinner.getValueFactory().setValue(value.doubleValue());
         }
     }
-    
+
     @Override
     public void createWidget(Pane parent) {
         List< ? extends Node> components = getBrickComponents();
@@ -154,7 +157,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             }
         }
     }
-    
+
     @Override
     public List<Node> getComponents() {
         List<Node> widgets = new ArrayList<Node>();
@@ -162,24 +165,24 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
         widgets.add(spinner);
         return widgets;
     }
-    
+
     @Override
     public List<Node> getComponentsExcludingLabel() {
         List<Node> widgets = new ArrayList<Node>();
         widgets.add(spinner);
         return widgets;
     }
-    
+
     @Override
     public void addListener(JavaFXListener listener) {
         spinner.valueProperty().addListener(listener);
     }
-    
+
     @Override
     public void removeListener(JavaFXListener listener) {
         spinner.valueProperty().removeListener(listener);
     }
-    
+
     @Override
     public void setVisible(boolean visible) {
         if (wrapper != null) {
@@ -188,12 +191,12 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             super.setVisible(visible);
         }
     }
-    
+
     @Override
     public List< ? extends Node> createBrickComponents() {
-        
+
         List<Node> components = new ArrayList<Node>();
-        
+
         String tooltip = getTooltip();
 
         // label
@@ -207,7 +210,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             }
             components.add(label);
         }
-        
+
         Node comp = null;
         if (control instanceof SingleSpinnerT) {
             // spinner
@@ -232,10 +235,33 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
 
             // layout
             w.getChildren().add(spinner);
-            
+
             comp = w;
         }
         components.add(comp);
+
+        spinner.setEditable(true);
+
+        spinner.getEditor().textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue != null) {
+                    if (!newValue.matches("\\d+\\.\\d+")) {
+                        spinner.getEditor().setText(newValue.replaceAll("[^\\d+\\.\\d+]", ""));
+                    }
+                }
+            }
+        });
+
+        spinner.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if (ke.getCode().equals(KeyCode.ENTER)) {
+                    String val = spinner.getEditor().getText();
+                    spinner.getValueFactory().setValue(val);
+                }
+            }
+        });
 
         // number model
         spinner.setValueFactory(model);
@@ -243,20 +269,20 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
         // Set min/max/precision if a parameter is attached
         if (parameterConverter != null && parameterConverter instanceof DecimalConverter) {
             DecimalConverter tempDecimalConverter = (DecimalConverter) parameterConverter;
-            
+
             if (tempDecimalConverter.getPrecision() != null) {
                 digits = tempDecimalConverter.getPrecision().intValue();
             } else {
                 digits = ControlHelper.getDefaultDigitsForSpinnerControl(parameterConverter.getParameter(), getAtdl4jOptions());
             }
-            
+
             if (tempDecimalConverter.getMinValue() != null) {
                 // -- need to handle Percentage ("control value" representation) --
                 BigDecimal tempParameterMin = tempDecimalConverter.getMinValue();
                 BigDecimal tempControlMin = tempDecimalConverter.convertParameterValueToControlValue(tempParameterMin);
                 model.setMin(tempControlMin.setScale(digits, RoundingMode.HALF_UP).doubleValue());
             }
-            
+
             if (tempDecimalConverter.getMaxValue() != null) {
                 // -- need to handle Percentage ("control value" representation) --
                 BigDecimal tempParameterMax = tempDecimalConverter.getMaxValue();
@@ -268,7 +294,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
 
             // -- Integer always has 0 digits --
             digits = 0;
-            
+
             if (tempIntegerConverter.getMinValue() != null) {
                 BigInteger tempParameterMin = tempIntegerConverter.getMinValue();
                 BigInteger tempControlMin = tempIntegerConverter.convertParameterValueToControlValue(tempParameterMin);
@@ -276,7 +302,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             } else {
                 model.setMin(JavaFXNullableSpinner.MIN_INTEGER_VALUE_AS_BIG_DECIMAL.doubleValue());
             }
-            
+
             if (tempIntegerConverter.getMaxValue() != null) {
                 BigInteger tempParameterMax = tempIntegerConverter.getMaxValue();
                 BigInteger tempControlMax = tempIntegerConverter.convertParameterValueToControlValue(tempParameterMax);
@@ -285,23 +311,23 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
                 model.setMax(JavaFXNullableSpinner.MAX_INTEGER_VALUE_AS_BIG_DECIMAL.doubleValue());
             }
         }
-        
+
         if (control instanceof DoubleSpinnerT) {
             BigDecimal tempInnerIncrement = ControlHelper.getInnerIncrementValue(control, getAtdl4jOptions(), digits);
             if (tempInnerIncrement != null) {
                 // -- Handle initValue="2.5" and ensure that we don't wind up using BigDecimal unscaled and end up with "25" --
                 model.setAmountToStepBy(tempInnerIncrement.doubleValue());
             }
-            
+
             BigDecimal outerStepSize = new BigDecimal("1");
-            
+
             BigDecimal tempOuterIncrement = ControlHelper.getOuterIncrementValue(control, getAtdl4jOptions());
             if (tempOuterIncrement != null) {
                 outerStepSize = tempOuterIncrement;
             }
-            
+
             spinner.valueProperty().addListener(new DoubleSpinnerListener(spinner, outerStepSize, outerStepSize.negate()));
-            
+
         } else if (control instanceof SingleSpinnerT) {
             BigDecimal tempIncrement = ControlHelper.getIncrementValue(control, getAtdl4jOptions(), digits);
             if (tempIncrement != null) {
@@ -316,14 +342,14 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
                     model.setAmountToStepBy(new BigDecimal("1").doubleValue());
                 }
             }
-            
+
         }
-        
+
         spinner.setPrefHeight(22);
         spinner.setPrefWidth(100);
-        
+
         applyInitialValue();
-        
+
         return components;
     }
 }

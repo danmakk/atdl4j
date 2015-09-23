@@ -73,7 +73,7 @@ public class JavaFXStrategyPanelFactory {
             controlWidgets.putAll(widgets);
         }
 
-        // build control widgets recursively
+        // build control widgets recursively 
         for (ControlT control : panel.getControl()) {
             ParameterT parameter = null;
 

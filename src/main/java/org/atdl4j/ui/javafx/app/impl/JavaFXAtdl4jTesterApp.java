@@ -73,7 +73,7 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
         // -- Build the JavaFX panel from Atdl4jTesterPanel (** core GUI component **) --
         getAtdl4jTesterPanel().buildAtdl4jTesterPanel(pane, getAtdl4jOptions());
         Atdl4jCompositePanel panel = getAtdl4jTesterPanel().getAtdl4jCompositePanel();
-        panel.parseFixatdlFile("C:\\Users\\DANIEL.MAKGONTA\\Downloads\\FIXatdl_Example_Templates_20100820\\FIXatdl_Example_Slider.xml");
+        panel.parseFixatdlFile("C:\\Users\\DANIEL.MAKGONTA\\Downloads\\FIXatdl_Example_Templates_20100820\\FIXatdl_Example_Spinners.xml");
         panel.loadScreenWithFilteredStrategies();
         final JavaFXStrategiesUI uiList = (JavaFXStrategiesUI) panel.getStrategiesUI();
         List<StrategyT> strategies = panel.getStrategiesFilteredStrategyList();

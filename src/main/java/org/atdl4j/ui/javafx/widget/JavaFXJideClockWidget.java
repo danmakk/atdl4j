@@ -357,7 +357,7 @@ public class JavaFXJideClockWidget extends AbstractJavaFXWidget<Comparable<DateT
             // add label
             hasLabelOrCheckbox = true;
             label = new Label();
-            label.setPadding(new Insets(5, 5, 5, 5));
+            label.setPadding(new Insets(5, 5, 0, 0));
             label.setText(control.getLabel());
             if (tooltip != null) {
                 Tooltip tip = new Tooltip(tooltip);
