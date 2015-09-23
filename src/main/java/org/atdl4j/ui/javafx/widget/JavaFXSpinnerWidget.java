@@ -205,8 +205,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             label.setText(control.getLabel());
             label.setPadding(new Insets(5, 5, 5, 5));
             if (tooltip != null) {
-                Tooltip tip = new Tooltip(tooltip);
-                label.setTooltip(tip);
+                label.setTooltip(new Tooltip(tooltip));
             }
             components.add(label);
         }
@@ -215,11 +214,10 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
         if (control instanceof SingleSpinnerT) {
             // spinner
             spinner = new Spinner();
-            spinner.setPadding(new Insets(0, 5, 5, 5));
 
             // tooltip
             if (tooltip != null) {
-                spinner.getTooltip().setText(tooltip);
+                spinner.setTooltip(new Tooltip(tooltip));
             }
             comp = spinner;
         } else if (control instanceof DoubleSpinnerT) {
@@ -229,8 +227,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
 
             // tooltip
             if (tooltip != null) {
-                Tooltip tip = new Tooltip(tooltip);
-                spinner.setTooltip(tip);
+                spinner.setTooltip(new Tooltip(tooltip));
             }
 
             // layout
