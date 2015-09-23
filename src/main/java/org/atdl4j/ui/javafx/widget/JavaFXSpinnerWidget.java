@@ -117,7 +117,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
         if (initValue != null) {
             setValue(new BigDecimal(initValue));
         } else {
-            setValue(null);
+            setValue(new BigDecimal(0.0));
         }
     }
 
@@ -140,7 +140,6 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
         if (value != null) {
             spinner.getValueFactory().setValue(value.doubleValue());
         }
-        spinner.getValueFactory().setValue(0.0);
     }
 
     @Override
