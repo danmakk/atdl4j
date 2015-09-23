@@ -14,7 +14,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -141,6 +140,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
         if (value != null) {
             spinner.getValueFactory().setValue(value.doubleValue());
         }
+        spinner.getValueFactory().setValue(0.0);
     }
 
     @Override
@@ -346,7 +346,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
         }
 
         spinner.setPrefHeight(22);
-        spinner.setPrefWidth(100);
+        spinner.setPrefWidth(150);
 
         applyInitialValue();
 
