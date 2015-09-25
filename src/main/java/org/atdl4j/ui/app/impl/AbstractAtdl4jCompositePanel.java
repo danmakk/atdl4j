@@ -1,6 +1,7 @@
 package org.atdl4j.ui.app.impl;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -268,10 +269,19 @@ public abstract class AbstractAtdl4jCompositePanel
                 throw new FIXatdlFormatException("Could not parse URL: " + aFilename);
             }
         } catch (MalformedURLException e) {
+            File file;
             try {
-                // try to parse as file
-                File file = new File(aFilename);
+                try {
+                    // try to parse as file
+                    ClassLoader classLoader = getClass().getClassLoader();
+                    file = new File(classLoader.getResource(aFilename).getFile());
+
+                } catch (NullPointerException np) {
+                    file = new File(aFilename);
+                }
+
                 element = (JAXBElement<?>) um.unmarshal(file);
+                
             } catch (JAXBException ex) {
                 ex.printStackTrace();
                 throw new FIXatdlFormatException("Could not parse File: " + aFilename);
@@ -530,8 +540,8 @@ public abstract class AbstractAtdl4jCompositePanel
         for (StrategyT strategy : getStrategies().getStrategy()) {
             if (getAtdl4jOptions() == null) {
                 setAtdl4jOptions(new Atdl4jOptions());
-                if(getAtdl4jOptions().getInputAndFilterData() == null){
-                   getAtdl4jOptions().setInputAndFilterData(new InputAndFilterData());
+                if (getAtdl4jOptions().getInputAndFilterData() == null) {
+                    getAtdl4jOptions().setInputAndFilterData(new InputAndFilterData());
                 }
             }
             if (!getAtdl4jOptions().getInputAndFilterData().isStrategySupported(strategy)) {

@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.atdl4j.ui.javafx.app.impl;
 
+import java.io.File;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -19,10 +15,9 @@ import org.atdl4j.ui.javafx.config.JavaFXAtdl4jConfiguration;
  */
 public class JavaFXDisplayPanel extends Application {
 
-    public static String[] args;
+    private final String xmlFilePath = "samples/sample1.xml";
 
     public static void main(String[] args) {
-        JavaFXDisplayPanel.args = args;
         launch();
         System.exit(0);
     }
@@ -32,8 +27,11 @@ public class JavaFXDisplayPanel extends Application {
         Atdl4jConfiguration config = new JavaFXAtdl4jConfiguration();
         JavaFXAtdl4jTesterApp tempJavaFXAtdl4jTesterApp = new JavaFXAtdl4jTesterApp();
         try {
-            Pane root = tempJavaFXAtdl4jTesterApp.mainLine(args, config);
+
+            ClassLoader classLoader = getClass().getClassLoader();
+            File file = new File(classLoader.getResource("samples/sample1.xml").getFile());
             
+            Pane root = tempJavaFXAtdl4jTesterApp.mainLine(config, xmlFilePath);
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();

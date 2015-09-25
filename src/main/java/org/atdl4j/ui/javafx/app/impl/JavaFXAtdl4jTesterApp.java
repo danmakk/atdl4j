@@ -44,7 +44,7 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
         Atdl4jConfiguration config = new JavaFXAtdl4jConfiguration();
         JavaFXAtdl4jTesterApp tempJavaFXAtdl4jTesterApp = new JavaFXAtdl4jTesterApp();
         try {
-            tempJavaFXAtdl4jTesterApp.mainLine(args, config);
+            tempJavaFXAtdl4jTesterApp.mainLine(config, "/org.atdl4j.examples/sample1.xml");
         } catch (Exception e) {
             if (Atdl4jConfig.getConfig().isCatchAllMainlineExceptions()) {
                 JavaFXAtdl4jTesterApp.logger.warn("Fatal Exception in mainLine", e);
@@ -54,7 +54,7 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
         }
     }
 
-    public Pane mainLine(final String[] args, Atdl4jConfiguration config) throws Exception {
+    public Pane mainLine(Atdl4jConfiguration config, String XMLFilePath) throws Exception {
         BorderPane pane = new BorderPane();
         BorderPane root = new BorderPane();
 
@@ -73,7 +73,7 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
         // -- Build the JavaFX panel from Atdl4jTesterPanel (** core GUI component **) --
         getAtdl4jTesterPanel().buildAtdl4jTesterPanel(pane, getAtdl4jOptions());
         Atdl4jCompositePanel panel = getAtdl4jTesterPanel().getAtdl4jCompositePanel();
-        panel.parseFixatdlFile("C:\\Users\\DANIEL.MAKGONTA\\Desktop\\strategies\\direct.xml");
+        panel.parseFixatdlFile(XMLFilePath);
         panel.loadScreenWithFilteredStrategies();
         final JavaFXStrategiesUI uiList = (JavaFXStrategiesUI) panel.getStrategiesUI();
         List<StrategyT> strategies = panel.getStrategiesFilteredStrategyList();
