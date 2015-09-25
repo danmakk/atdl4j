@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.apache.log4j.Logger;
@@ -59,7 +60,15 @@ public class JavaFXStrategyUI extends AbstractStrategyUI {
                             getParameterMap(), 0,
                             getAtdl4jWidgetFactory());
             tempJavaFXWidgetMap.putAll(strategyPanelAndWidgets);
-            Pane container = strategyPanelFactory.createStrategyPanel(new VBox(), panel, 0, strategyPanelAndWidgets, 0);
+            
+            Pane orientationBox;
+            if("HORIZONTAL".equals(panel.getOrientation().value())){
+                orientationBox = new HBox();
+            }else{
+                orientationBox = new VBox();
+            }
+            
+            Pane container = strategyPanelFactory.createStrategyPanel(orientationBox, panel, 0, strategyPanelAndWidgets, 0);
             childComponent.getChildren().add(container);
             row++;
         }

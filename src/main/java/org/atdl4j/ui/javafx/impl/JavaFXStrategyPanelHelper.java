@@ -19,8 +19,15 @@ import org.atdl4j.ui.StrategyPanelHelper;
 public class JavaFXStrategyPanelHelper implements StrategyPanelHelper {
 
     public static Pane createStrategyPanelContainer(StrategyPanelT aStrategyPanel, Pane aParent, int aStyle) {
-        VBox c = new VBox();
-        c.setPadding(new Insets(8, 8, 8, 8));
+        Pane c;
+
+        if ("HORIZONTAL".equals(aStrategyPanel.getOrientation().value())) {
+            c = new HBox();
+        } else {
+            c = new VBox();
+        }
+
+        c.setPadding(new Insets(5, 5, 5, 30));
 
         if (aStrategyPanel.getTitle() != null) {
             HBox box = new HBox();
@@ -34,7 +41,6 @@ public class JavaFXStrategyPanelHelper implements StrategyPanelHelper {
             box.getChildren().add(title);
             c.getChildren().add(box);
         }
-        
         return c;
     }
 
@@ -49,11 +55,11 @@ public class JavaFXStrategyPanelHelper implements StrategyPanelHelper {
         } else {
             throw new FIXatdlFormatException("StrategyPanel (" + _panelT.getTitle() + ") is missing orientation attribute.");
         }
-        
+
         if (_panel.getChildren().size() > 0) {
             box.getChildren().addAll(_panel.getChildren());
         }
-        
+
         box.setPadding(new Insets(8, 8, 8, 8));
         _panel = box;
     }
@@ -67,7 +73,6 @@ public class JavaFXStrategyPanelHelper implements StrategyPanelHelper {
      * adjusted
      */
     public boolean expandAtdl4jWidgetParentStrategyPanel(Atdl4jWidget<?> aWidget) {
-
         return true;
     }
 }

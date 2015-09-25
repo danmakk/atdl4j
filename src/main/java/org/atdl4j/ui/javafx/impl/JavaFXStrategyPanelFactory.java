@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.apache.log4j.Logger;
 import org.atdl4j.data.exception.FIXatdlFormatException;
 import org.atdl4j.fixatdl.core.ParameterT;
 import org.atdl4j.fixatdl.layout.ControlT;
-import org.atdl4j.fixatdl.layout.PanelOrientationT;
 import org.atdl4j.fixatdl.layout.StrategyPanelT;
 import org.atdl4j.ui.Atdl4jWidgetFactory;
 import org.atdl4j.ui.javafx.JavaFXWidget;
@@ -119,16 +117,7 @@ public class JavaFXStrategyPanelFactory {
             // create a container
             Pane c = JavaFXStrategyPanelHelper.createStrategyPanelContainer(sp, parent, style);
 
-            PanelOrientationT orientation = sp.getOrientation();
-            String orient = orientation.value();
-
-            Pane container;
-
-            if ("VERTICAL".equals(orient.trim())) {
-                container = new VBox();
-            } else { //HORIZONTAL
-                container = new HBox();
-            }
+            Pane container = new VBox();
 
             c.getChildren().add(container);
             // recursive call
@@ -164,7 +153,7 @@ public class JavaFXStrategyPanelFactory {
                 rowIndex++;
             }
         }
-        
+
         parent.getChildren().add(new Pane());
         return (Pane) parent;
     }
