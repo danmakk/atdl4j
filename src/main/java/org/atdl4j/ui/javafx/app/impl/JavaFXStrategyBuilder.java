@@ -6,11 +6,11 @@ import org.atdl4j.config.Atdl4jConfig;
 import org.atdl4j.config.Atdl4jConfiguration;
 import org.atdl4j.ui.javafx.config.JavaFXAtdl4jConfiguration;
 
-public class StrategyBuilder {
+public class JavaFXStrategyBuilder {
 
     private final String XMLFilePath;
     
-    public StrategyBuilder(String XMLFilePath) {
+    public JavaFXStrategyBuilder(String XMLFilePath) {
         this.XMLFilePath = XMLFilePath;
     }
 
