@@ -99,6 +99,7 @@ public class JavaFXLabelWidget extends AbstractLabelWidget
         // label
         label = new Label();
         label.setPadding(new Insets(0, 5, 5, 5));
+        label.setId(control.getParameterRef());
 
         if (control.getLabel() != null) {
             label.setText(control.getLabel());

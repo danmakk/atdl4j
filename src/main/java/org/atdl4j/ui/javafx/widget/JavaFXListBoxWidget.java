@@ -145,6 +145,7 @@ public class JavaFXListBoxWidget extends AbstractJavaFXWidget<String> {
         // listbox
         listBox = new ListView<String>(list);
         listBox.setPadding(new Insets(0, 5, 5, 5));
+        listBox.setId(control.getParameterRef());
 
         if (control instanceof MultiSelectListT) {
             listBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

@@ -150,15 +150,16 @@ public class JavaFXButtonWidget extends AbstractJavaFXWidget<Boolean> {
 
     @Override
     public List<? extends Node> createBrickComponents() {
-
-        // button
+        
         if (control instanceof RadioButtonT) {
             button2 = new RadioButton(control.getLabel());
             button2.setPadding(new Insets(5, 10, 5, 5));
+            button2.setId(control.getParameterRef());
             button = null;
         } else if (control instanceof CheckBoxT) {
             button = new CheckBox(control.getLabel());
             button.setPadding(new Insets(5, 10, 5, 5));
+            button.setId(control.getParameterRef());
             button2 = null;
         }
 
@@ -172,7 +173,6 @@ public class JavaFXButtonWidget extends AbstractJavaFXWidget<Boolean> {
             }
         }
 
-        // if (control.getTooltip() != null) button.setToolTipText(control.getTooltip());
         Boolean tempInitValue = (Boolean) ControlHelper.getInitValue(control, getAtdl4jOptions());
 
         if (tempInitValue != null) {

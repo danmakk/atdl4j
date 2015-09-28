@@ -208,6 +208,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
         if (control instanceof SingleSpinnerT) {
             // spinner
             spinner = new Spinner();
+            spinner.setId(control.getParameterRef());
 
             // tooltip
             if (tooltip != null) {

@@ -137,7 +137,7 @@ public class JavaFXTextFieldWidget extends AbstractJavaFXWidget<String> {
 
     @Override
     public List< ? extends Node> createBrickComponents() {
-
+                
         List<Node> components = new ArrayList<Node>();
 
         // tooltip

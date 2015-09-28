@@ -150,6 +150,7 @@ public class JavaFXRadioButtonListWidget extends AbstractJavaFXWidget<String> {
         // radioButton
         for (ListItemT listItem : ((RadioButtonListT) control).getListItem()) {
             RadioButton radioElement = new RadioButton();
+            radioElement.setId(control.getParameterRef());
             radioElement.setPadding(new Insets(5, 10, 5, 5));
             radioElement.setText(listItem.getUiRep());
             Tooltip tip = new Tooltip();

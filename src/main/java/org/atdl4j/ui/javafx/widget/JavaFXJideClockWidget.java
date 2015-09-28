@@ -372,6 +372,7 @@ public class JavaFXJideClockWidget extends AbstractJavaFXWidget<Comparable<DateT
             final String pattern = showDay ? "dd.MM.yyyy" : "MM.yyyy";
 
             dateClock = new DatePicker();
+            dateClock.setId(control.getParameterRef());
             dateClock.setPadding(new Insets(0, 5, 5, 5));
             dateClock.setPromptText((pattern).toLowerCase());
             dateClock.setConverter(new StringConverter<LocalDate>() {
@@ -407,6 +408,7 @@ public class JavaFXJideClockWidget extends AbstractJavaFXWidget<Comparable<DateT
             final String pattern = show24HourClock ? "HH:mm:ss" : "hh:mm:ss";
 
             timeClock = new JavaFXTimeTextFieldWidget();
+            timeClock.setId(control.getParameterRef());
             timeClock.setPadding(new Insets(0, 5, 5, 5));
 
             if (tooltip != null) {

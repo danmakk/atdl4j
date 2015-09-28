@@ -109,6 +109,7 @@ public class JavaFXSliderWidget extends AbstractJavaFXWidget<String> {
 
         // slider
         slider = new Slider(0, numColumns - 1, 0);
+        slider.setId(control.getParameterRef());
         slider.setOrientation(Orientation.HORIZONTAL);
         slider.setPadding(new Insets(0, 5, 5, 5));
         

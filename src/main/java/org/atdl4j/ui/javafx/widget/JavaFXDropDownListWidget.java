@@ -187,6 +187,7 @@ public class JavaFXDropDownListWidget extends AbstractJavaFXWidget<String> {
         // dropDownList
         dropDownList = new ComboBox<String>();
         dropDownList.setPadding(new Insets(0, 5, 5, 5));
+        dropDownList.setId(control.getParameterRef());
 
         // set editable
         dropDownList.setEditable(control instanceof EditableDropDownListT);

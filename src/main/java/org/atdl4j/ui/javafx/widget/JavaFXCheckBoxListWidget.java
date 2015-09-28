@@ -152,6 +152,7 @@ public class JavaFXCheckBoxListWidget extends AbstractJavaFXWidget<String> {
         for (ListItemT listItem : listItems) {
             
             CheckBox checkBox = new CheckBox(listItem.getUiRep());
+            checkBox.setId(control.getParameterRef());
             //checkBox.setName(getName() + "/button/" + listItem.getEnumID());
 
             if (listItem.getUiRep() != null) {
