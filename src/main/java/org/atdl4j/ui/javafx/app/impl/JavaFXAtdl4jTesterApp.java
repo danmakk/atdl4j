@@ -8,10 +8,12 @@ package org.atdl4j.ui.javafx.app.impl;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
@@ -32,7 +34,7 @@ import org.atdl4j.ui.javafx.impl.JavaFXStrategyUI;
  * @author daniel.makgonta
  */
 public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
-
+    
     public static final Logger logger = Logger.getLogger(JavaFXAtdl4jTesterApp.class);
 
     /**
@@ -40,7 +42,7 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-
+        
         Atdl4jConfiguration config = new JavaFXAtdl4jConfiguration();
         JavaFXAtdl4jTesterApp tempJavaFXAtdl4jTesterApp = new JavaFXAtdl4jTesterApp();
         try {
@@ -53,16 +55,17 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
             }
         }
     }
-
+    
     public Pane mainLine(Atdl4jConfiguration config, String XMLFilePath) throws Exception {
         BorderPane pane = new BorderPane();
         BorderPane root = new BorderPane();
-
+        
         ComboBox<StrategyT> strategyList = new ComboBox<StrategyT>();
-
-        VBox conatinerBox = new VBox();
+        
+        HBox containerBox = new HBox();
+        containerBox.setPadding(new Insets(5, 10, 5, 5));
         final VBox strategyBox = new VBox();
-        root.setCenter(conatinerBox);
+        root.setCenter(containerBox);
 
         // -- Delegate setup to AbstractAtdl4jTesterApp, construct a new
         // JavaFX-specific Atdl4jOptions --
@@ -77,7 +80,7 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
         panel.loadScreenWithFilteredStrategies();
         final JavaFXStrategiesUI uiList = (JavaFXStrategiesUI) panel.getStrategiesUI();
         List<StrategyT> strategies = panel.getStrategiesFilteredStrategyList();
-
+        
         strategyList.getItems().addAll(strategies);
         strategyList.setCellFactory(new Callback<ListView<StrategyT>, ListCell<StrategyT>>() {
             @Override
@@ -85,9 +88,9 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
                 return new StrategyListCell();
             }
         });
-
+        
         strategyList.setConverter(new StringConverter<StrategyT>() {
-
+            
             @Override
             public String toString(StrategyT strategy) {
                 if (strategy != null) {
@@ -95,34 +98,34 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
                 }
                 return null;
             }
-
+            
             @Override
             public StrategyT fromString(String string) {
                 return null;
             }
         });
-
+        
         strategyList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StrategyT>() {
-
+            
             @Override
             public void changed(ObservableValue<? extends StrategyT> observable, StrategyT oldValue, StrategyT newValue) {
                 strategyBox.getChildren().clear();
-
+                
                 JavaFXStrategyUI ui = (JavaFXStrategyUI) uiList.getStrategyUI(newValue, true);
-
+                
                 strategyBox.getChildren().add(ui.getParentComponent());
-
+                
             }
         });
-
+        
         pane.setPrefSize(600, 600);
         root.setPrefSize(700, 700);
-
-        conatinerBox.getChildren().addAll(strategyList, strategyBox);
-
+        
+        containerBox.getChildren().addAll(strategyList, strategyBox);
+        
         return root;
     }
-
+    
     private String[] convertToStringArray(List<StrategyT> strategy) {
         if (strategy.size() > 0) {
             String[] tmp = new String[strategy.size()];
@@ -136,9 +139,9 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
         }
         return null;
     }
-
+    
     class StrategyListCell extends ListCell<StrategyT> {
-
+        
         @Override
         protected void updateItem(StrategyT item, boolean empty) {
             super.updateItem(item, empty);
