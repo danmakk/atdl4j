@@ -13,7 +13,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -65,7 +64,7 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
         strategyList.setMinWidth(120);
 
         HBox containerBox = new HBox();
-        containerBox.setPadding(new Insets(5, 10, 5, 5));
+        containerBox.setPadding(new Insets(5, 0, 5, 0));
         final VBox strategyBox = new VBox();
         root.getChildren().add(containerBox);
 

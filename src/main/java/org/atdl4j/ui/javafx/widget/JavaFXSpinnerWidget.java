@@ -197,7 +197,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
         if (control.getLabel() != null) {
             label = new Label();
             label.setText(control.getLabel());
-            label.setPadding(new Insets(5, 5, 0, 0));
+            label.setPadding(new Insets(0, 5, 0, 0));
             if (tooltip != null) {
                 label.setTooltip(new Tooltip(tooltip));
             }

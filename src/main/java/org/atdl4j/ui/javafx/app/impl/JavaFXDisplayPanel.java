@@ -1,6 +1,5 @@
 package org.atdl4j.ui.javafx.app.impl;
 
-import java.io.File;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -27,10 +26,6 @@ public class JavaFXDisplayPanel extends Application {
         Atdl4jConfiguration config = new JavaFXAtdl4jConfiguration();
         JavaFXAtdl4jTesterApp tempJavaFXAtdl4jTesterApp = new JavaFXAtdl4jTesterApp();
         try {
-
-            ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("samples/sample1.xml").getFile());
-            
             Pane root = tempJavaFXAtdl4jTesterApp.mainLine(config, xmlFilePath);
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

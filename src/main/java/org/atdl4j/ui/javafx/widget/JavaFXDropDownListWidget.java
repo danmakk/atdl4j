@@ -177,7 +177,7 @@ public class JavaFXDropDownListWidget extends AbstractJavaFXWidget<String> {
         // label
         if (control.getLabel() != null) {
             label = new Label();
-            label.setPadding(new Insets(5, 5, 5, 5));
+            label.setPadding(new Insets(0, 5, 5, 5));
             label.setText(control.getLabel());
             if (tooltip != null) {
                 label.getTooltip().setText(tooltip);
