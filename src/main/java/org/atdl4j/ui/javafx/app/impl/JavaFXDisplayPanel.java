@@ -37,6 +37,5 @@ public class JavaFXDisplayPanel extends Application {
                 throw e;
             }
         }
-
     }
 }
