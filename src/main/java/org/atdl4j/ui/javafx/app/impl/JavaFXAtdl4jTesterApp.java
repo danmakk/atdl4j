@@ -53,7 +53,7 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
         Atdl4jConfiguration config = new JavaFXAtdl4jConfiguration();
         JavaFXAtdl4jTesterApp tempJavaFXAtdl4jTesterApp = new JavaFXAtdl4jTesterApp();
         try {
-            tempJavaFXAtdl4jTesterApp.mainLine(config, "/samples/sample1.xml");
+            tempJavaFXAtdl4jTesterApp.mainLine(config, "samples/sample1.xml");
         } catch (Exception e) {
             if (Atdl4jConfig.getConfig().isCatchAllMainlineExceptions()) {
                 JavaFXAtdl4jTesterApp.logger.warn("Fatal Exception in mainLine", e);
