@@ -109,11 +109,11 @@ public class JavaFXButtonWidget extends AbstractJavaFXWidget<Boolean> {
         }
         return null;
     }
-    
-    public RadioButton getRadioButton(){
+
+    public RadioButton getRadioButton() {
         return button2;
     }
-
+    
     @Override
     public List<Node> getComponents() {
         List<Node> widgets = new ArrayList<Node>();
@@ -150,7 +150,7 @@ public class JavaFXButtonWidget extends AbstractJavaFXWidget<Boolean> {
 
     @Override
     public List<? extends Node> createBrickComponents() {
-        
+
         if (control instanceof RadioButtonT) {
             button2 = new RadioButton(control.getLabel());
             button2.setPadding(new Insets(5, 10, 5, 5));

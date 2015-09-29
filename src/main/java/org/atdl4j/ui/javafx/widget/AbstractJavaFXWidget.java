@@ -8,7 +8,6 @@ package org.atdl4j.ui.javafx.widget;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.atdl4j.ui.impl.AbstractAtdl4jWidget;

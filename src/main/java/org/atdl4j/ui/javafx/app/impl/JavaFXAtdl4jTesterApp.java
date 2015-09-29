@@ -5,11 +5,14 @@
  */
 package org.atdl4j.ui.javafx.app.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
@@ -23,8 +26,10 @@ import org.atdl4j.config.Atdl4jConfig;
 import org.atdl4j.config.Atdl4jConfiguration;
 import org.atdl4j.config.Atdl4jOptions;
 import org.atdl4j.fixatdl.core.StrategyT;
+import org.atdl4j.ui.Atdl4jWidget;
 import org.atdl4j.ui.app.Atdl4jCompositePanel;
 import org.atdl4j.ui.app.impl.AbstractAtdl4jTesterApp;
+import org.atdl4j.ui.javafx.JavaFXWidget;
 import org.atdl4j.ui.javafx.config.JavaFXAtdl4jConfiguration;
 import org.atdl4j.ui.javafx.impl.JavaFXStrategiesUI;
 import org.atdl4j.ui.javafx.impl.JavaFXStrategyUI;
@@ -36,6 +41,8 @@ import org.atdl4j.ui.javafx.impl.JavaFXStrategyUI;
 public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
 
     public static final Logger logger = Logger.getLogger(JavaFXAtdl4jTesterApp.class);
+    private ComboBox<StrategyT> strategyList;
+    private final ArrayList<Node> strategyWidgets = new ArrayList<Node>();
 
     /**
      * @param args
@@ -46,7 +53,7 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
         Atdl4jConfiguration config = new JavaFXAtdl4jConfiguration();
         JavaFXAtdl4jTesterApp tempJavaFXAtdl4jTesterApp = new JavaFXAtdl4jTesterApp();
         try {
-            tempJavaFXAtdl4jTesterApp.mainLine(config, "/org.atdl4j.examples/sample1.xml");
+            tempJavaFXAtdl4jTesterApp.mainLine(config, "/samples/sample1.xml");
         } catch (Exception e) {
             if (Atdl4jConfig.getConfig().isCatchAllMainlineExceptions()) {
                 JavaFXAtdl4jTesterApp.logger.warn("Fatal Exception in mainLine", e);
@@ -56,11 +63,15 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
         }
     }
 
+    public ArrayList<? extends Node> getStrategyWidgets() {
+        return strategyWidgets;
+    }
+
     public Pane mainLine(Atdl4jConfiguration config, String XMLFilePath) throws Exception {
         AnchorPane pane = new AnchorPane();
         AnchorPane root = new AnchorPane();
 
-        ComboBox<StrategyT> strategyList = new ComboBox<StrategyT>();
+        strategyList = new ComboBox<StrategyT>();
         strategyList.setMinWidth(120);
 
         HBox containerBox = new HBox();
@@ -111,34 +122,45 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
             @Override
             public void changed(ObservableValue<? extends StrategyT> observable, StrategyT oldValue, StrategyT newValue) {
                 strategyBox.getChildren().clear();
-
+                strategyWidgets.clear();
                 JavaFXStrategyUI ui = (JavaFXStrategyUI) uiList.getStrategyUI(newValue, true);
-
                 strategyBox.getChildren().add(ui.getParentComponent());
 
+                for (Atdl4jWidget<?> widget : ui.getAtdl4jWidgetMap().values()) {
+                    if (widget != null) {
+                        if (((JavaFXWidget) widget).getComponentsExcludingLabel() != null) {
+                            for (Object atomicNode : ((JavaFXWidget) widget).getComponentsExcludingLabel()) {
+                                Node n = (Node) atomicNode;
+                               strategyWidgets.add(n);
+                            }
+                        }
+                    }
+                }
             }
         });
 
-        pane.setPrefSize(600, 600);
-        root.setPrefSize(700, 700);
+        root.setPrefWidth(600);
+        pane.setPrefWidth(400);
+        root.setPrefHeight(500);
+        pane.setPrefHeight(400);
 
         containerBox.getChildren().addAll(strategyList, strategyBox);
 
         return root;
     }
 
-    private String[] convertToStringArray(List<StrategyT> strategy) {
-        if (strategy.size() > 0) {
-            String[] tmp = new String[strategy.size()];
-            int i = 0;
-            for (StrategyT strat : strategy) {
-                String name = strat.getUiRep();
-                tmp[i] = name;
-                i++;
+    public void show(javafx.scene.Node n) {
+        if (n != null) {
+            if (!(n instanceof Pane) && !(n instanceof Label) && n != strategyList) {
+                System.out.println(n);
             }
-            return tmp;
+
+            if (n instanceof Pane) {
+                for (int i = 0; i < ((Pane) n).getChildren().size(); i++) {
+                    show(((Pane) n).getChildren().get(i));
+                }
+            }
         }
-        return null;
     }
 
     class StrategyListCell extends ListCell<StrategyT> {
