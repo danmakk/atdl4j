@@ -154,6 +154,7 @@ public class JavaFXTextFieldWidget extends AbstractJavaFXWidget<String> {
 
         // textField
         textField = new TextField();
+        textField.setId(control.getParameterRef());
 
         // init value
         if (ControlHelper.getInitValue(control, getAtdl4jOptions()) != null) {
