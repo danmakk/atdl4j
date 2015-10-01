@@ -14,7 +14,7 @@ import org.atdl4j.ui.javafx.config.JavaFXAtdl4jConfiguration;
  */
 public class JavaFXDisplayPanel extends Application {
 
-    private final String xmlFilePath = "samples/sample1.xml";
+    private final String xmlFilePath = "C:\\Users\\DANIEL.MAKGONTA\\Desktop\\strategies\\direct.xml";
 
     public static void main(String[] args) {
         launch();
