@@ -244,7 +244,11 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
                         spinner.getEditor().setText(update);
                         newValue = update;
                     }
-                    spinner.getValueFactory().setValue(Double.parseDouble(newValue));
+                    if("".equals(newValue)){
+                        newValue = "0";
+                    }
+                    
+                    spinner.getValueFactory().setValue(newValue);
                 }
             }
         });
