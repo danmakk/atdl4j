@@ -251,7 +251,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
                     if (control instanceof SingleSpinnerT) {
                         spinner.getValueFactory().setValue(Integer.parseInt(newValue));
                     } else if (control instanceof DoubleSpinnerT) {
-                        spinner.getValueFactory().setValue(Integer.parseInt(newValue));
+                        spinner.getValueFactory().setValue(Double.parseDouble(newValue));
                     }
                 }
             }
