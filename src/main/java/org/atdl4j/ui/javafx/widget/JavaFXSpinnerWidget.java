@@ -42,7 +42,9 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
     private Label label;
     private int digits = 0;
     private VBox wrapper;
-    private SpinnerValueFactory.DoubleSpinnerValueFactory model = new SpinnerValueFactory.DoubleSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE);
+    private SpinnerValueFactory model = (control instanceof DoubleSpinnerT)
+            ? new SpinnerValueFactory.DoubleSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE)
+            : new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE);
 
     @Override
     protected void processReinit(Object aControlInitValue) {
@@ -190,7 +192,6 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
     public List< ? extends Node> createBrickComponents() {
 
         List<Node> components = new ArrayList<Node>();
-
         String tooltip = getTooltip();
 
         // label
@@ -275,14 +276,14 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
                 // -- need to handle Percentage ("control value" representation) --
                 BigDecimal tempParameterMin = tempDecimalConverter.getMinValue();
                 BigDecimal tempControlMin = tempDecimalConverter.convertParameterValueToControlValue(tempParameterMin);
-                model.setMin(tempControlMin.setScale(digits, RoundingMode.HALF_UP).doubleValue());
+                ((SpinnerValueFactory.DoubleSpinnerValueFactory) model).setMin(tempControlMin.setScale(digits, RoundingMode.HALF_UP).doubleValue());
             }
 
             if (tempDecimalConverter.getMaxValue() != null) {
                 // -- need to handle Percentage ("control value" representation) --
                 BigDecimal tempParameterMax = tempDecimalConverter.getMaxValue();
                 BigDecimal tempControlMax = tempDecimalConverter.convertParameterValueToControlValue(tempParameterMax);
-                model.setMax(tempControlMax.setScale(digits, RoundingMode.HALF_UP).doubleValue());
+                ((SpinnerValueFactory.DoubleSpinnerValueFactory) model).setMax(tempControlMax.setScale(digits, RoundingMode.HALF_UP).doubleValue());
             }
         } else if (parameterConverter != null && parameterConverter instanceof IntegerConverter) {
             IntegerConverter tempIntegerConverter = (IntegerConverter) parameterConverter;
@@ -293,17 +294,17 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             if (tempIntegerConverter.getMinValue() != null) {
                 BigInteger tempParameterMin = tempIntegerConverter.getMinValue();
                 BigInteger tempControlMin = tempIntegerConverter.convertParameterValueToControlValue(tempParameterMin);
-                model.setMin(new BigDecimal(tempControlMin).intValue());
+                ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setMin(new BigDecimal(tempControlMin).intValue());
             } else {
-                model.setMin(JavaFXNullableSpinner.MIN_INTEGER_VALUE_AS_BIG_DECIMAL.doubleValue());
+                ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setMin(JavaFXNullableSpinner.MIN_INTEGER_VALUE_AS_BIG_DECIMAL.intValue());
             }
 
             if (tempIntegerConverter.getMaxValue() != null) {
                 BigInteger tempParameterMax = tempIntegerConverter.getMaxValue();
                 BigInteger tempControlMax = tempIntegerConverter.convertParameterValueToControlValue(tempParameterMax);
-                model.setMax(new BigDecimal(tempControlMax).intValue());
+                ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setMax(new BigDecimal(tempControlMax).intValue());
             } else {
-                model.setMax(JavaFXNullableSpinner.MAX_INTEGER_VALUE_AS_BIG_DECIMAL.doubleValue());
+                ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setMax(JavaFXNullableSpinner.MAX_INTEGER_VALUE_AS_BIG_DECIMAL.intValue());
             }
         }
 
@@ -311,7 +312,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             BigDecimal tempInnerIncrement = ControlHelper.getInnerIncrementValue(control, getAtdl4jOptions(), digits);
             if (tempInnerIncrement != null) {
                 // -- Handle initValue="2.5" and ensure that we don't wind up using BigDecimal unscaled and end up with "25" --
-                model.setAmountToStepBy(tempInnerIncrement.doubleValue());
+                ((SpinnerValueFactory.DoubleSpinnerValueFactory)model).setAmountToStepBy(tempInnerIncrement.doubleValue());
             }
 
             BigDecimal outerStepSize = new BigDecimal("1");
@@ -327,14 +328,14 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             BigDecimal tempIncrement = ControlHelper.getIncrementValue(control, getAtdl4jOptions(), digits);
             if (tempIncrement != null) {
                 // -- Handle initValue="2.5" and ensure that we don't wind up using BigDecimal unscaled and end up with "25" --
-                model.setAmountToStepBy(tempIncrement.doubleValue());
+                ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setAmountToStepBy(tempIncrement.intValue());
             } else // tempIncrement is null
             {
                 if (digits != 0) {
                     // -- Set the increment to the precision associated with digits (eg ".01" when digits=2, ".001" when digits=3) --
-                    model.setAmountToStepBy(new BigDecimal(Math.pow(10, -digits)).setScale(digits, RoundingMode.HALF_UP).doubleValue());
+                    ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setAmountToStepBy(new BigDecimal(Math.pow(10, -digits)).setScale(digits, RoundingMode.HALF_UP).intValue());
                 } else {
-                    model.setAmountToStepBy(new BigDecimal("1").doubleValue());
+                    ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setAmountToStepBy(new BigDecimal("1").intValue());
                 }
             }
 
