@@ -244,11 +244,15 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
                         spinner.getEditor().setText(update);
                         newValue = update;
                     }
-                    if("".equals(newValue)){
+                    if ("".equals(newValue)) {
                         newValue = "0";
                     }
-                    
-                    spinner.getValueFactory().setValue(newValue);
+
+                    if (control instanceof SingleSpinnerT) {
+                        spinner.getValueFactory().setValue(Integer.parseInt(newValue));
+                    } else if (control instanceof DoubleSpinnerT) {
+                        spinner.getValueFactory().setValue(Integer.parseInt(newValue));
+                    }
                 }
             }
         });
@@ -298,17 +302,17 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             if (tempIntegerConverter.getMinValue() != null) {
                 BigInteger tempParameterMin = tempIntegerConverter.getMinValue();
                 BigInteger tempControlMin = tempIntegerConverter.convertParameterValueToControlValue(tempParameterMin);
-                ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setMin(new BigDecimal(tempControlMin).intValue());
+                ((SpinnerValueFactory.IntegerSpinnerValueFactory) model).setMin(new BigDecimal(tempControlMin).intValue());
             } else {
-                ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setMin(JavaFXNullableSpinner.MIN_INTEGER_VALUE_AS_BIG_DECIMAL.intValue());
+                ((SpinnerValueFactory.IntegerSpinnerValueFactory) model).setMin(JavaFXNullableSpinner.MIN_INTEGER_VALUE_AS_BIG_DECIMAL.intValue());
             }
 
             if (tempIntegerConverter.getMaxValue() != null) {
                 BigInteger tempParameterMax = tempIntegerConverter.getMaxValue();
                 BigInteger tempControlMax = tempIntegerConverter.convertParameterValueToControlValue(tempParameterMax);
-                ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setMax(new BigDecimal(tempControlMax).intValue());
+                ((SpinnerValueFactory.IntegerSpinnerValueFactory) model).setMax(new BigDecimal(tempControlMax).intValue());
             } else {
-                ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setMax(JavaFXNullableSpinner.MAX_INTEGER_VALUE_AS_BIG_DECIMAL.intValue());
+                ((SpinnerValueFactory.IntegerSpinnerValueFactory) model).setMax(JavaFXNullableSpinner.MAX_INTEGER_VALUE_AS_BIG_DECIMAL.intValue());
             }
         }
 
@@ -316,7 +320,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             BigDecimal tempInnerIncrement = ControlHelper.getInnerIncrementValue(control, getAtdl4jOptions(), digits);
             if (tempInnerIncrement != null) {
                 // -- Handle initValue="2.5" and ensure that we don't wind up using BigDecimal unscaled and end up with "25" --
-                ((SpinnerValueFactory.DoubleSpinnerValueFactory)model).setAmountToStepBy(tempInnerIncrement.doubleValue());
+                ((SpinnerValueFactory.DoubleSpinnerValueFactory) model).setAmountToStepBy(tempInnerIncrement.doubleValue());
             }
 
             BigDecimal outerStepSize = new BigDecimal("1");
@@ -332,14 +336,14 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
             BigDecimal tempIncrement = ControlHelper.getIncrementValue(control, getAtdl4jOptions(), digits);
             if (tempIncrement != null) {
                 // -- Handle initValue="2.5" and ensure that we don't wind up using BigDecimal unscaled and end up with "25" --
-                ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setAmountToStepBy(tempIncrement.intValue());
+                ((SpinnerValueFactory.IntegerSpinnerValueFactory) model).setAmountToStepBy(tempIncrement.intValue());
             } else // tempIncrement is null
             {
                 if (digits != 0) {
                     // -- Set the increment to the precision associated with digits (eg ".01" when digits=2, ".001" when digits=3) --
-                    ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setAmountToStepBy(new BigDecimal(Math.pow(10, -digits)).setScale(digits, RoundingMode.HALF_UP).intValue());
+                    ((SpinnerValueFactory.IntegerSpinnerValueFactory) model).setAmountToStepBy(new BigDecimal(Math.pow(10, -digits)).setScale(digits, RoundingMode.HALF_UP).intValue());
                 } else {
-                    ((SpinnerValueFactory.IntegerSpinnerValueFactory)model).setAmountToStepBy(new BigDecimal("1").intValue());
+                    ((SpinnerValueFactory.IntegerSpinnerValueFactory) model).setAmountToStepBy(new BigDecimal("1").intValue());
                 }
             }
 
