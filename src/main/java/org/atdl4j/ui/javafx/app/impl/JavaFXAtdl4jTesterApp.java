@@ -148,6 +148,10 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
 
         return root;
     }
+    
+    public ComboBox getStrategyList(){
+        return this.strategyList;
+    }
 
     public void show(javafx.scene.Node n) {
         if (n != null) {
