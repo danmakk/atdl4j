@@ -138,6 +138,9 @@ public class JavaFXAtdl4jTesterApp extends AbstractAtdl4jTesterApp {
                 }
             }
         });
+        
+        
+        strategyList.getSelectionModel().selectFirst();
 
         root.setPrefWidth(600);
         pane.setPrefWidth(400);
