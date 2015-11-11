@@ -237,6 +237,7 @@ public class JavaFXSpinnerWidget extends AbstractJavaFXWidget<BigDecimal> {
         } else if (control instanceof DoubleSpinnerT) {
             // doubleSpinnerGrid
             spinner = new Spinner();
+            spinner.setId(control.getParameterRef());
             HBox w = new HBox();
 
             // tooltip
